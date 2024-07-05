@@ -1,5 +1,5 @@
-# IBM Cúram Social Program Management Performance Tuning
+# Cúram Performance & Tuning Guide
 
-This repository contains the documentation needed to help tune IBM Cúram Social Program Management.
+This repository contains the documentation needed to help tune Cúram.
 
-The tuning documentation is available at the following URL: https://ibm.github.io/spm-performance-tuning/
+The tuning documentation is available at the following URL: https://merative.github.io/curam-performance-tuning/
