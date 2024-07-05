@@ -1,0 +1,58 @@
+name: gatsbyDeploy
+on:
+  push:
+    branches: [ main , Release-July-2024 ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: actions/setup-python@v2.2.2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies and Prepare environment
+        run: |
+          node --version
+          npm install -g markdownlint-cli
+          npm install --legacy-peer-deps
+          # npm ci
+          pip install --user linkchecker
+
+      - name: Build docs
+        run: |
+          markdownlint **/*.mdx
+          npm run build
+
+      - name: Validate docs
+        run: |
+          docker run --rm -d --name gatsby -p 8888:80 -v $(pwd)/public:/usr/local/apache2/htdocs$SITE_PREFIX httpd:2.4
+          linkchecker http://$(hostname -f):8888$SITE_PREFIX --config=./linkcheckerrc
+
+
+      - name: Deploy to GitHub Pages
+        # only deploy when pushing to main
+        if: ${{ github.event_name == 'push' && github.ref_name == 'Release-July-2024' }}
+        run: |
+          cd ./public
+          git init -b main
+          git config user.name ${{ github.actor }}
+          git config user.email ${{ github.actor }}@users.noreply.github.com
+          git add .
+          git commit -m "Deploy commit: ${{ github.sha }}"
+          git push -f https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git main:gh-pages
+          echo 'Finished deploying the site.'
+      # - name: Deploy Pages
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   if: ${{ github.ref == 'refs/heads/main' }}
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./public
+      #     publish_branch: gh-pages
+      #     force_orphan: true
