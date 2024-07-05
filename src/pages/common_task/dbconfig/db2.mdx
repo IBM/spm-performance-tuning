@@ -16,7 +16,7 @@ The following maintenance and database design guidelines apply to tuning Db2® d
 
 Database tuning provided in this guidance is not comprehensive.
 
-However, the following values are a starting point for how to configure a performant database for IBM® Cúram Social Program Management.
+However, the following values are a starting point for how to configure a performant database for Cúram.
 It is our recommendation that project teams verify their own tuning, and where necessary adapt and expand the configuration based on their own requirements prior to going in to production.
 
 </InlineNotification>
@@ -32,10 +32,10 @@ In addition to physical database design done as part of the project, the followi
 * Move all indexes to the 4 K page indexes table space. A common page size makes database administration easier and improves performance. For example, indexes of tables in the 32 K page table space that use 4 K pages require less I/O.
 * Move all LOBs to the 4 K page LOBs table space.
 * Move all tables that do not need 32 K page to the 4 K page data table space. It can improve buffer pool utilization and decrease database I/O.
-* Enable compression on tables if it is wanted. Compression was tested by IBM with no issues.
+* Enable compression on tables if it is wanted. Compression was tested by Cúram with no issues.
 * Review the use of dedicated table spaces. Consider moving the largest tables (for example, `DYNAMICEVIDENCEDATAATTRIBUTE` and `DEPENDENCY`) to dedicated table spaces. However, from experience, with good I/O layouts, the only reason for dedicated table spaces is maintenance.
 * Review the use of partitioning. From experience, with good I/O layouts, the only reason for partitioning is maintenance (similar to dedicated table spaces).
-* After creating the database, see [Configuring the IBM Db2 database](https://www.ibm.com/docs/en/spm/8.0.0?topic=configuration-configuring-db2-database), consider setting the `highmem` buffer pool size to `AUTOMATIC` e.g.,
+* After creating the database, see **Configuring the IBM® Db2® database** in the **Development Environment Installation Guide**, consider setting the `highmem` buffer pool size to `AUTOMATIC` e.g.,
 
  ```sql
   db2 alter bufferpool HIGHMEM size AUTOMATIC
@@ -45,7 +45,7 @@ In addition to physical database design done as part of the project, the followi
 
  <InlineNotification kind="warning">
 
-  **Note:** The above will cause the Ant `configtest` target to fail, see [Testing the configuration](https://www.ibm.com/docs/en/spm/8.0.0?topic=configuration-testing). Therefore, run the `build cofigtest` procedure prior to altering the bufferpool.
+  **Note:** The above will cause the Ant `configtest` target to fail, see **Testing the configuration** in the **Development Environment Installation Guide**. Therefore, run the `build cofigtest` procedure prior to altering the bufferpool.
 
  </InlineNotification>
 

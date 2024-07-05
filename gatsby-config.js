@@ -1,15 +1,6 @@
-const siteTitle = 'IBM Curam Social Program Management Performance Tuning & Sizing guide'
+const siteTitle = 'Cúram Performance Tuning & Sizing guide'
 
 var activeEnv = 'local'
-
-if (process.env.CI == 'true') {
-  activeEnv = 'production'
-}
-
-console.log(`Using environment config: '${activeEnv}'`)
-require("dotenv").config({
-  path: `.env.${activeEnv}`,
-})
 
 var sitePrefix = process.env.SITE_PREFIX || "/"
 console.log(`Using SITE_PREFIX: '${sitePrefix}'`)
@@ -17,8 +8,8 @@ console.log(`Using SITE_PREFIX: '${sitePrefix}'`)
 module.exports = {
   siteMetadata: {
     title: siteTitle,
-    description: "IBM Curam Social Program Management Performance Tuning",
-    keywords: 'ibm,curam,containers,performance,tuning',
+    description: "Cúram Performance Tuning Guide",
+    keywords: 'cúram,containers,performance,tuning',
   },
   pathPrefix: sitePrefix,
   plugins: [
@@ -40,6 +31,7 @@ module.exports = {
         isSearchEnabled: true,
         withWebp: true,
         imageQuality: 75,
+        iconPath: "./src/images/curam-favicon-32.svg"
       },
     },
   ],

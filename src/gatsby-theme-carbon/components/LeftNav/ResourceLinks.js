@@ -3,16 +3,16 @@ import ResourceLinks from 'gatsby-theme-carbon/src/components/LeftNav/ResourceLi
 
 const links = [
   {
-    title: 'Github',
-    href: 'https://github.com/IBM/spm-performance-tuning',
+    title: 'Cúram Documentation',
+    href: 'https://curam-spm-devops.github.io/wh-support-docs/spm/pdf-documentation/',
   },
   {
-    title: 'IBM Documentation',
-    href: 'https://www.ibm.com/docs/en/spm/8.0.0?topic=product-overview',
+    title: 'Github',
+    href: 'https://github.com/merative/curam-performance-tuning',
   },
   {
     title: 'Change Log',
-    href: 'https://github.com/IBM/spm-performance-tuning/blob/main/CHANGELOG.md',
+    href: 'https://github.com/merative/curam-performance-tuning/blob/main/CHANGELOG.md',
   }
 ];
 

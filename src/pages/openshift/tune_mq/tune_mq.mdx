@@ -11,9 +11,9 @@ description: Tuning the MQ pods
 
 ## Overview
 
-The following information describes how to tune the resources of the MQ pods for each SPM application (for example, `curam`, `rest`, etc.).
+The following information describes how to tune the resources of the MQ pods for each Cúram application (for example, `curam`, `rest`, etc.).
 
-As independent from each other, the SPM applications generally require flexibility in specifying tuning settings which is achieved with the `global.apps.config.<applicationID>.mqTuning` values.
+As independent from each other, the Cúram applications generally require flexibility in specifying tuning settings which is achieved with the `global.apps.config.<applicationID>.mqTuning` values.
 
 For additional information about MQ performance, tuning and sizing please refer to [MQ Performance documents](http://ibm-messaging.github.io/mqperf/).
 
@@ -54,7 +54,7 @@ global:
 
 <InlineNotification kind="warning">
 
-For the Guaranteed QoS, SPM highly recommends that a pod must have **both** CPU and Memory requests and limits set to equal values. If requests & limits are different for a given pod, it would be eligible for rescheduling in case of resource pressure on its node.
+For the Guaranteed QoS, Cúram highly recommends that a pod must have **both** CPU and Memory requests and limits set to equal values. If requests & limits are different for a given pod, it would be eligible for rescheduling in case of resource pressure on its node.
 
 For more information please review [Configure Quality of Service for Pods](https://kubernetes.io/docs/tasks/configure-pod-container/quality-service-pod/#create-a-pod-that-gets-assigned-a-qos-class-of-guaranteed).
 

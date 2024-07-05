@@ -13,7 +13,7 @@ description: Tuning the XML server pods
 
 ## Overview
 
-The following information is specific for the tuning of the SPM XML server on OpenShift and IBM Kubernetes Services.
+The following information is specific for the tuning of the Cúram XML server on OpenShift and Kubernetes Services.
 
 Additionally, the general XML server tuning information is available in the [Tuning the XML server](/common_task/xmlservertuning) section of this guide.
 
@@ -43,7 +43,7 @@ xmlserver:
 
 <InlineNotification kind="warning">
 
-For the Guaranteed QoS, SPM highly recommends that a pod must have **both** CPU and Memory requests and limits set to equal values. If requests & limits are different for a given pod, it would be eligible for rescheduling in case of resource pressure on its node.
+For the Guaranteed QoS, Cúram highly recommends that a pod must have **both** CPU and Memory requests and limits set to equal values. If requests & limits are different for a given pod, it would be eligible for rescheduling in case of resource pressure on its node.
 
 For more information please review [Configure Quality of Service for Pods](https://kubernetes.io/docs/tasks/configure-pod-container/quality-service-pod/#create-a-pod-that-gets-assigned-a-qos-class-of-guaranteed).
 
@@ -56,20 +56,20 @@ The XML server provides two areas for tuning:
 1. The XML server configuration
 1. The JVM in which the XML server runs
 
-Specific settings for each of these areas are available via Helm chart overrides.  For more information about Helm charts see the IBM Cúram Social Program Management on Kubernetes Runbook:
+Specific settings for each of these areas are available via Helm Chart overrides.  For more information about Helm Charts see the Cúram on Kubernetes Runbook:
 
-* The [Configuration Reference](https://ibm.github.io/spm-kubernetes/deployment/config-reference/#xml-server) section lists the Helm chart settings and their default values for the configuration that follows;
-* The [Deploying Helm charts](https://ibm.github.io/spm-kubernetes/deployment/hc_deployment/) section describes how to specify Helm chart overrides in an override file.
+* The [Configuration Reference](https://merative.github.io/spm-kubernetes/deployment/config-reference/#xml-server) section lists the Helm Chart settings and their default values for the configuration that follows;
+* The [Deploying Helm Charts](https://merative.github.io/spm-kubernetes/deployment/hc_deployment/) section describes how to specify Helm Chart overrides in an override file.
 
 ### XML server configuration
 
-These are configuration settings of the XML server, accessible via Helm chart overrides, that can be used to tune its performance:
+These are configuration settings of the XML server, accessible via Helm Chart overrides, that can be used to tune its performance:
 
 * XML server thread pool size - This setting essentially controls the amount of work the XML server can do.
 * XML server thread pool queue size - This setting controls the number of requests that are queued inside the XML server as opposed to the TCP backlog queue.
 * XML server socket timeout - This setting (expressed as milliseconds) determines the length of time the XML server will wait for a socket request to complete.
 
-The SPM Helm charts are coded to be able to specify `threadPoolSize`, `threadPoolQueueSize` and `socketTimeout`. For instance, this shows the default settings for `xmlserver` application pods:
+The Cúram Helm Charts are coded to be able to specify `threadPoolSize`, `threadPoolQueueSize` and `socketTimeout`. For instance, this shows the default settings for `xmlserver` application pods:
 
 ```yaml
 xmlserver:
@@ -81,12 +81,12 @@ xmlserver:
 
 ### XML server JVM
 
-These are Java JVM settings, accessbile via Helm chart overrides, that can be used to tune its performance:
+These are Java JVM settings, accessbile via Helm Chart overrides, that can be used to tune its performance:
 
 * Java maximum heap - This setting maps to the the `maxmemory` attribute of the Ant `<java>` task in the XML server `xmlserver.xml` Ant script, which is invoked when the pod is started. (Note: Ant's `maxmemory` attribute overrides the JVM `-Xmx` setting.)
 * Java thread stack size - This maps to  the specification of the JVM stack size argument, `-Xss`, specified as an Ant property override; for example: `-Djava.thread.stack.size="-Xss4m"`
 
-The SPM Helm charts are coded to be able to specify the JVM `maxMemory` and `threadStackSize`. For instance, this shows the default settings for `xmlserver` application pods:
+The Cúram Helm Charts are coded to be able to specify the JVM `maxMemory` and `threadStackSize`. For instance, this shows the default settings for `xmlserver` application pods:
 
 ```yaml
 xmlserver:

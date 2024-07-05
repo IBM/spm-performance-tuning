@@ -4,7 +4,7 @@ import HomepageTemplate from 'gatsby-theme-carbon/src/templates/Homepage';
 
 import Carbon from '../images/carbon.jpg';
 
-const BannerText = () => <h1>IBM Cúram Social Program Management Performance Tuning</h1>;
+const BannerText = () => <h1>Cúram Performance & Tuning Guide</h1>;
 
 const customProps = {
   Banner: <HomepageBanner renderText={BannerText} image={Carbon} />,

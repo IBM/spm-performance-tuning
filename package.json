@@ -1,7 +1,7 @@
 {
-  "name": "spm-performance-tuning",
+  "name": "curam-performance-tuning",
   "private": true,
-  "version": "22.4.0",
+  "version": "24.7.0",
   "license": "Apache 2.0",
   "scripts": {
     "dev": "gatsby develop -H 0.0.0.0",
@@ -15,12 +15,13 @@
     "test:prefix": "gatsby build:prefix && gatsby serve:prefix"
   },
   "dependencies": {
-    "gatsby": "4.6.0",
-    "gatsby-cli": "4.6.0",
-    "gatsby-theme-carbon": "3.0.0-next.1",
-    "markdownlint-cli": "0.30.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "immer": "9.0.12"
+    "@carbon/icons-react": "^11.36.0",
+    "carbon-components": "^10.58.12",
+    "carbon-components-react": "^8.51.0",
+    "gatsby": "^4.25.8",
+    "gatsby-cli": "4.25.0",
+    "gatsby-theme-carbon": "^3.4.13",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
