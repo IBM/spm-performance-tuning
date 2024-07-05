@@ -3,11 +3,16 @@ title: Tuning the XML server
 description: Tuning the XML server
 ---
 
+## Contents
+
 <AnchorLinks small>
+  <AnchorLink>Introduction</AnchorLink>
   <AnchorLink>Becoming aware of how your XML server normally performs</AnchorLink>
   <AnchorLink>Identifying causes of poor performance</AnchorLink>
   <AnchorLink>Tuning and configuration changes</AnchorLink>
 </AnchorLinks>
+
+## Introduction
 
 These are the basic high-level steps for tuning the XML server:
 
@@ -18,10 +23,10 @@ These are the basic high-level steps for tuning the XML server:
 
 ## Becoming aware of how your XML server normally performs
 
-Your main source of XML server performance information comes from its `stats/ThreadWorkerPool-*` files. For more information see these XML server topics in IBM Documentation:
+Your main source of XML server performance information comes from its `stats/ThreadWorkerPool-*` files. For more information see these XML server topics in the product documentation:
 
-* [Statistics](https://www.ibm.com/docs/en/spm/8.0.0?topic=server-statistics) - outlines the information available in these files.
-* [Configuration options](https://www.ibm.com/docs/en/spm/8.0.0?topic=server-configuration-options) - identifies the configuration necessary to produce these files.
+* **Statistics** in the *Social Program Management XML Infrastructure Guide* - outlines the information available in these files.
+* **Configuring the XML server** in the **XML Infrastructure Guide** - identifies the configuration necessary to produce these files.
 
 ## Identifying causes of poor performance
 
@@ -29,8 +34,7 @@ If the the `stats/ThreadWorkerPool-*` files indicate a performance problem--for 
 
 * Check the `$CURAMSDEJ/xmlserver/tmp/xmlserver.log` file for unexpected errors:
   * Look for any indications of socket timeouts or dropped connections, which could be indicators that the `<THREAD_POOL_QUEUE_SIZE>` setting is too small.
-    As per the [IBM Documentation](https://www.ibm.com/docs/en/spm/8.0.0?topic=server-configuration-options),
-    that setting determines the point at which requests are held inside the XML server rather than in the TCP backlog queue.
+    As per the **XML Infrastructure Guide**, that setting determines the point at which requests are held inside the XML server rather than in the TCP backlog queue.
     How the TCP backlog queue behaves when it is exhausted depends on the underlying operating system and in some cases may retry or timeout the connection.
     Some indicators of socket connection issues in `xmlserver.log` might include:
     * `WRN_CONN_SET_SO_TIMEOUT` exceptions indicating socket reads are hitting the socket read timeout (XML server `<SO_TIMEOUT>` setting), which defaults to 60 seconds (60000 ms).
@@ -39,20 +43,22 @@ If the the `stats/ThreadWorkerPool-*` files indicate a performance problem--for 
   * Check the performance of the application server(s) communicating with this XML server to confirm it is performing adequately and not impacting the XML server.
   * Run Java garbage collection (GC) tracing to confirm and evaluate the performance of the Java Heap used by the XML server.
     Use the `java.jvmargs` Ant property to pass GC settings to the JVM when starting the XML server.  For example, using an IBM JVM: `ant -f xmlserver.xml -Djava.jvmargs="-verbose:gc -Xverbosegclog:/tmp/gc/verbosegc.log"`
-  * Confirm the overall system performance. For instance, CPU and memory utilization; for instance, by using [nmon](https://sourceforge.net/p/nmon/wiki/Home/).
+  * Confirm the overall system performance; for instance, CPU and memory utilization. There are a number of tools available for monitoring, depending on the context of the platform.
 
 ## Tuning and configuration changes
 
 These are the areas available within, or closely related to, the XML server for tuning:
 
-* These XML server settings in `xmlserverconfigconfig.xml`, which are described in the related [Configuration options](https://www.ibm.com/docs/en/spm/8.0.0?topic=server-configuration-options) topic IBM Documentation:
+* These XML server settings in `xmlserverconfigconfig.xml`, which are described in the related **XML Infrastructure Guide**, are specific to the XML server:
   * `<THREAD_POOL_QUEUE_SIZE>`
   * `<THREAD_POOL_SIZE>`
   * `<USE_TEMPLATE_CACHE>`
   * `<SO_TIMEOUT>`
 * These Java JVM settings:
   * Thread stack size can be set when starting the XML server. For example: `ant -f xmlserver.xml -Djava.thread.stack.size="-Xss8m"`.
-    See the related [Overriding the Java thread stack size](https://www.ibm.com/docs/en/spm/8.0.0?topic=server-overriding-java-thread-stack-size) topic in IBM Documentation for more information.
+    For more information see **Overriding the Java thread stack size** in the **XML Infrastructure Guide**.
+    If you change the default number of XML server threads (`<THREAD_POOL_SIZE>`) this setting may also need to be adjusted.
   * Java heap is set in `xmlserver.xml` as an Ant property, `java.maxmemory`, specifying the `maxmemory` attribute of the Ant `<java>` task.
     For example: `ant -f xmlserver.xml -Djava.maxmemory="1024m"`.
-* XML server load balancing is described in the [Load balancing and failover](https://www.ibm.com/docs/en/spm/8.0.0?topic=xml-load-balancing-failover) topic in IBM Documentation.
+* For on premise deployments the XML server provides load balancing functionality, which is described in **Load balancing and failover** in the **XML Infrastructure Guide**.
+  However, when deployed to Kubernetes the native scaling capabilities of that platform should be used instead.

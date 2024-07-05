@@ -1,12 +1,29 @@
 # Changelog
 
+## v24.7.0
+
+### Breaking Changes
+
+* Guide is no longer called `spm-performance-tuning`. Renamed to `curam-performance-tuning`
+
+### Changed
+
+* Modified `package.json` to upgrade Gatsby.
+
 All notable changes to this project will be documented in this file
+
+## v22.11.0
+
+### Changed
+
+* Modified `package.json` to upgrade Gatsby.
+* Modified the [Tuning the XML server](https://merative.github.io/spm-performance-tuning/common_task/xmlservertuning) topic to clarify tuning information 
 
 ## v22.4.0
 
 ### Removed
 
-* Removed the transaction isolation Level settings for JMS producer / consumer pod data sources because the WebSphere Liberty data source `isolationLevel` setting has been removed from the underlying Helm configmaps [#109](https://github.com/IBM/spm-kubernetes/issues/109).
+* Removed the transaction isolation Level settings for JMS producer / consumer pod data sources because the WebSphere Liberty data source `isolationLevel` setting has been removed from the underlying Helm configmaps [#109](https://github.com/merative/spm-kubernetes/issues/109).
 
 ## v22.1.0
 
@@ -35,7 +52,7 @@ All notable changes to this project will be documented in this file
 
 ### Changed
 
-* Updated IBM Documentation link to SPM V8.
+* Updated product documentation link to SPM V8.
 
 ## v21.7.1
 

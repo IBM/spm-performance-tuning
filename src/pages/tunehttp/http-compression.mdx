@@ -8,7 +8,7 @@ Use the Apache module `mod_deflate` to compress the content that is served by th
 
 ## Static content
 
-To apply the configuration for SPM static content, configure the following settings in the `httpd.conf` file on the HTTP server.
+To apply the configuration for Cúram static content, configure the following settings in the `httpd.conf` file on the HTTP server.
 This example assumes that you are using the relative URL `/CuramStatic/`.
 
 ```shell
@@ -33,7 +33,7 @@ Header append Vary User-Agent env=!dont-vary
 To apply the configuration for web applications, such as the Universal Access Responsive Web Application,
 configure the following settings in the `httpd.conf` file on the HTTP server.
 This example assumes that you are using the relative URL `/universal` for your Universal Access Responsive
-Web Application application, and that the SPM REST APIs are being served from `/Rest`.
+Web Application application, and that the Cúram REST APIs are being served from `/Rest`.
 
 ```shell
 # List of MIME types that can be compressed provided with the out-of-the-box application
@@ -55,7 +55,7 @@ Web Application application, and that the SPM REST APIs are being served from `/
   LoadModule deflate_module modules/mod_deflate.so
 </IfModule>
 
-# Assuming /Rest is mapped to the Curam SPM REST API application,
+# Assuming /Rest is mapped to the Curam REST API application,
 # you can add it to LocationMatch to benefit from the compression of file types like JSON or SVG
 <LocationMatch /(universal|Rest)>
   AddOutputFilterByType DEFLATE text/html text/plain text/css application/x-javascript application/javascript image/svg+xml application/json image/x-icon image/vnd.microsoft.icon

@@ -16,7 +16,7 @@ The following maintenance and database design guidelines apply to tuning Oracle 
 
 Database tuning provided in this guidance is not comprehensive.
 
-However, the following values are a starting point for how to configure a performant database for IBM® Cúram Social Program Management.
+However, the following values are a starting point for how to configure a performant database for Cúram.
 It is our recommendation that project teams verify their own tuning, and where necessary adapt and expand the configuration based on their own requirements prior to going in to production.
 
 </InlineNotification>
@@ -29,7 +29,7 @@ a 2 K block table space for indexes, and move indexes to that 2 K block index ta
 
 ## Initialization and tuning parameters for Oracle databases
 
-The application server for IBM® Cúram Social Program Management uses JDBC connection pooling and prepared statement caching.
+The application server for Cúram uses JDBC connection pooling and prepared statement caching.
 At bare minimum, review and adjust the `PROCESSES` and `OPEN_CURSORS` parameters from the following list according to your system requirements.
 
 You can use the following guidance when you are deciding which values to apply for `PROCESSES` and `OPEN_CURSORS` on your system.
@@ -159,7 +159,7 @@ The database optimizer relies on database statistics to determine which indexes 
 If the database statistics are not up-to-date, the correct indexes might not be used. In this case, the performance
 of the system degrades, and at worst the system becomes unstable. It is important to ensure that database statistics
 are run and gathered frequently. The general convention is that database statistics are gathered on a table when 10%
-or more of the data on that table changes. Typical examples in SPM are to run statistic in the early life of the system and after some batch job executions.
+or more of the data on that table changes. Typical examples in Cúram are to run statistic in the early life of the system and after some batch job executions.
 
-More specifically, initially many tables in the SPM database are empty or have a low number of rows. Therefore, before you turn on a production or test system,
+More specifically, initially many tables in the Cúram database are empty or have a low number of rows. Therefore, before you turn on a production or test system,
 you must run and gather database statistics. During the first hours and days that the system is used, run and gather database statistics often, at least daily.

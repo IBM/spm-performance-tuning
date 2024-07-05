@@ -1,0 +1,56 @@
+name: CI
+
+# Controls when the workflow will run
+on:
+  push:
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build-runbook:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      SITE_PREFIX: /curam-performance-tuning/
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: actions/setup-python@v2.2.2
+        with:
+          python-version: 3.x
+
+      - name: Prepare environment
+        run: |
+          node --version
+          npm install -g markdownlint-cli
+          npm install --legacy-peer-deps
+          #npm ci
+          pip install --user linkchecker
+
+      - name: Build docs
+        run: |
+          markdownlint **/*.mdx
+          npm run build
+
+      - name: Validate docs
+        run: |
+          docker run --rm -d --name gatsby -p 8888:80 -v $(pwd)/public:/usr/local/apache2/htdocs$SITE_PREFIX httpd:2.4
+          linkchecker http://$(hostname -f):8888$SITE_PREFIX --config=./linkcheckerrc
+
+      - name: Deploy Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          github_token: ${{ secrets.PERF_GIT_DEPLOY_GH_PAGES_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
+          force_orphan: true
